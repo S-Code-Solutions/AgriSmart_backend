@@ -1,11 +1,13 @@
 package lk.smartagri.smartagriapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 
 @Entity
@@ -31,6 +33,7 @@ public class User implements Serializable {
     private String email;
     private String name;
 
-
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Crop> cropList;
 
 }
