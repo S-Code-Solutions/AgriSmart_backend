@@ -11,31 +11,36 @@ import java.util.List;
 
 public interface CropRepository extends JpaRepository<Crop,Integer> {
 
-    @Query(value = "SELECT planting_id FROM crop ORDER BY planting_id DESC LIMIT 1;", nativeQuery = true)
-    String getLastOrderId();
-
-    @Query(value = "SELECT planting_id FROM crop ORDER BY planting_id DESC LIMIT 1;", nativeQuery = true)
-    String getLastOrderId();
-
-    @Query(value = "SELECT planting_id FROM crop ORDER BY planting_id DESC LIMIT 1;", nativeQuery = true)
-    String getLastOrderId();
+//    @Query(value = "SELECT planting_id FROM crop ORDER BY planting_id DESC LIMIT 1;", nativeQuery = true)
+//    String getLastOrderId();
+//
+//    @Query(value = "SELECT planting_id FROM crop ORDER BY planting_id DESC LIMIT 1;", nativeQuery = true)
+//    String getLastOrderId();
+//
+//    @Query(value = "SELECT planting_id FROM crop ORDER BY planting_id DESC LIMIT 1;", nativeQuery = true)
+//    String getLastOrderId();
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO crop(crop_id,crop_name,crop_variety,planting_date,harvest_date,expected_yield,soil_type,fertilizer_control,pesticide_type,crop_status,cost,location,userwid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)" ,nativeQuery = true)
+    @Query(value = "INSERT INTO crop(crop_id,crop_name,crop_variety,crop_status,username) VALUES (?,?,?,?,?)", nativeQuery = true)
     void addCropRecorde(int crop_id,
-                           String crop_name,
-                           String crop_variety,
-                        LocalDate planting_date,
-                        LocalDate harvest_date,
-                        double expected_yield,
-                           String soil_type,
-                           String fertilizer_control,
-                           String pesticide_type,
-                           String crop_status,
-                        double cost,
-                        String location,String userId);
+                        String crop_name,
+                        String crop_variety,
+                        String crop_status,
+                        String username
+    );
 
-    @Query(value = "SELECT * FROM crop where userwid = ?1 ",nativeQuery = true)
+    @Query(value = "SELECT * FROM crop where username = ?1 ",nativeQuery = true)
     List<Crop> findAllByUserName(String username);
+
+
+//    @Query(value = "SELECT * FROM crop where crop_name =?1",nativeQuery = true)
+//    boolean existByCname(String crop_name);
+
+//    @Query(value = "SELECT * FROM crop where crop_name =?1",nativeQuery = true)
+//    boolean existByCname(String crop_name);
+
+    @Query(value =  "SELECT EXISTS(SELECT * FROM crop WHERE crop_name = ?1)", nativeQuery = true)
+    boolean existsByCropName(String crop_name);
+
 }

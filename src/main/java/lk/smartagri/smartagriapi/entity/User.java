@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "systemuser")
+@Table(name = "user")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -34,6 +34,6 @@ public class User implements Serializable {
     private String name;
 
     @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<Crop> cropList;
+    private List<Crop> crop;
 
 }

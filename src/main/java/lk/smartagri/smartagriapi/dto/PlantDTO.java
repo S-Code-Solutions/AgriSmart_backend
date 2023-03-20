@@ -10,11 +10,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class FertilizeDTO {
+public class PlantDTO {
     @Id
-    private String fertilize_name;
-    private String fertilizer_type;
-
-    private List<Fertilize_Detail_DTO> fertilize_detail;
-
+    private String plantMethod;
+    private String MethodDesc;
+//    private List<Plant_DetailDTO> plantDetailDTO;
 }

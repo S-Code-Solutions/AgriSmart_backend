@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "crop")
+@Table(name = "crop",uniqueConstraints = {@UniqueConstraint(columnNames = {"crop_variety"})})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -21,21 +21,12 @@ public class Crop implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int crop_id;
     private String crop_name;
+    @Column(name = "crop_variety")
     private String crop_variety;
-    private String soil_type;
-    private String pesticide_type;
     private String crop_status;
 
-    @OneToMany(mappedBy = "crop", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Planting> plantings;
-
-    @OneToMany(mappedBy = "crop", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Fertilize> fertilizers;
-
-    @OneToMany(mappedBy = "crop", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Harvest> harvests;
-
     @ManyToOne
-    @JoinColumn(name = "userID")
+    @JsonIgnore
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 }

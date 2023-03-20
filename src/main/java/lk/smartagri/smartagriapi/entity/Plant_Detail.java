@@ -6,29 +6,33 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "planting")
+@Table(name = "plant_detail")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Planting {
-
+public class Plant_Detail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long planting_id;
-    private String planting_method;
-    private String crop_name;
+    private long plant_detail_id;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "plantMethod", referencedColumnName = "plantMethod")
+    private Plant plant;
+
     private String planting_location;
     private String planting_density;
     private String seeding_rate;
     private String seeding_depth;
     private String soil_preparation;
-    private String planting_date;
+    private LocalDate planting_date;
+    private int water_duration;
+    private String message;
 
-    @ManyToOne
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "crop_id", referencedColumnName = "crop_id")
-    private Crop crop;
+    private Crop crop_id;
 }

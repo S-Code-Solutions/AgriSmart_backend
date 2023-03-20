@@ -14,25 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Harvest {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long harvest_id;
-    private String harvest_method;
-    private String harvesting_equipment;
-    private String labor_requirement;
-    private String storage_requirement;
-    private String harvest_quality;
-    private String market_destination;
-    private String post_harvest_handling;
-    private String yield_analysis;
-    private String crop_maturity;
-    private String harvest_labor_cost;
-    private String harvest_transport;
-    private String harvest_waste;
-    private String harvesting_date;
 
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "crop_id", referencedColumnName = "crop_id")
-    private Crop crop;
+    @Id
+    private String harvest_method;
+    private String MethodDesc;
+
+    @OneToMany(mappedBy = "harvest", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Harvest_Detail> harvest_detail;
 }

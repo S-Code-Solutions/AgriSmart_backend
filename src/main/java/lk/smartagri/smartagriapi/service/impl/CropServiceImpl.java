@@ -33,38 +33,18 @@ public class CropServiceImpl implements CropService {
 
     @Override
     public String saveCrop(CropDTO cropDTO) {
-        if (userRepository.existsByUsername(cropDTO.getUserID())) {
-            //createOrder Instance
-            cropRepository.addCropRecorde(cropDTO.getCrop_id(),cropDTO.getCrop_name(),cropDTO.getCrop_variety(),cropDTO.getSoil_type(),cropDTO.getPesticide_type(),cropDTO.getCrop_status(),cropDTO.getUserID());
-
-            List<PlantingDTO> list1 = cropDTO.getPlantings();
-            List<FertilizeDTO> list2 = cropDTO.getFertilizers();
-            List<HarvestDTO> list3 = cropDTO.getHarvests();
-            //saveAll OrderDetails
-            //Type listType = new TypeToken<List<OrderDetails>>(){}.getType();
-
-
-            list1.forEach(e -> {
-                String planting_id = cropRepository.getLastPlanting_id();
-                orderDetailRepository.placeOrder(e.getOrderDetailsId(), e.getQty(), oderid, e.getProductID());
-            });
-
-            list2.forEach(e -> {
-                String fert_id = cropRepository.getLastOrderId();
-                orderDetailRepository.placeOrder(e.getOrderDetailsId(), e.getQty(), oderid, e.getProductID());
-            });
-
-            list3.forEach(e -> {
-                String harvest_id = cropRepository.getLastOrderId();
-                orderDetailRepository.placeOrder(e.getOrderDetailsId(), e.getQty(), oderid, e.getProductID());
-            });
-            cartRepository.changeCartStatusByUserName(orderDTO.getUserID());
-
-            //orderDetailRepository.saveAll(modelMapper.map(list,listType));
+        if (cropRepository.existsById(cropDTO.getCrop_id())) {
+            return VarListUtil.RSP_NO_DATA_FOUND;
+        }
+        else if (cropRepository.existsByCropName(cropDTO.getCrop_name())) {
+            return VarListUtil.RSP_DUPLICATED;
+        }else {
+            System.out.println(cropDTO.toString());
+            cropRepository.addCropRecorde((int) cropDTO.getCrop_id(),cropDTO.getCrop_name(),
+                    cropDTO.getCrop_variety(),
+                    cropDTO.getCrop_status(),cropDTO.getUsername());
             return VarListUtil.RSP_SUCCESS;
         }
-
-        return VarListUtil.RSP_ERROR;
     }
 
 

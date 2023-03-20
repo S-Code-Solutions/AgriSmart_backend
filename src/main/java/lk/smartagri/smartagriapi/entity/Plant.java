@@ -6,20 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "fertilize")
+@Table(name = "plant")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Fertilize {
+public class Plant {
     @Id
-    private String fertilize_name;
-    private String fertilizer_type;
+    private String plantMethod;
+    private String MethodDesc;
 
-    @OneToMany(mappedBy = "fertilize", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Fertilize_Detail> fertilize_detail;
+    @OneToMany(mappedBy = "plant", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Plant_Detail> plant_detail;
 
 }

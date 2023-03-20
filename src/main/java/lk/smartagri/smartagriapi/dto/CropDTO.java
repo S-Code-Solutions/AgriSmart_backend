@@ -17,15 +17,9 @@ public class CropDTO {
     private int crop_id;
     private String crop_name;
     private String crop_variety;
-    private String soil_type;
-    private String pesticide_type;
     private String crop_status;
 
-    private List<PlantingDTO> plantings;
-    private List<FertilizeDTO> fertilizers;
-    private List<HarvestDTO> harvests;
-
     @JsonIgnore
-    private String userID;
+    private String username;
 
 }

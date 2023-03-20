@@ -25,7 +25,7 @@ public class CropManageController {
     private ResponseEntity<ResponseDTO> saveCrop(@RequestBody CropDTO cropDTO,@RequestAttribute String username){
 
         try {
-            cropDTO.setUserId(username);
+            cropDTO.setUsername(username);
             String res = cropService.saveCrop(cropDTO);
             if (res.equals("00")) {
                 responseDTO.setCode(VarListUtil.RSP_SUCCESS);
@@ -37,7 +37,12 @@ public class CropManageController {
                 responseDTO.setMessage("Please Use Different CropID");
                 responseDTO.setContent(null);
                 return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
-            }  else {
+            } else if (res.equals("06")) {
+                responseDTO.setCode(VarListUtil.RSP_DUPLICATED);
+                responseDTO.setMessage("Please Use Different Crop Name");
+                responseDTO.setContent(null);
+                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
+            } else {
                 responseDTO.setCode(VarListUtil.RSP_FAIL);
                 responseDTO.setMessage("Error");
                 responseDTO.setContent(null);
