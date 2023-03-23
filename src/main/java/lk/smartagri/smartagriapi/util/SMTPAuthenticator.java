@@ -8,9 +8,9 @@ import javax.mail.PasswordAuthentication;
 @Component
 public class SMTPAuthenticator extends javax.mail.Authenticator{
 
-    private final String senderEmailId="esoftassigmenets@gmail.com";
+    private final String senderEmailId="pdilminvirtusa@gmail.com";
     // TODO: 5/25/2022  please make sure turn on google account less secure app access
-    private final String senderPassword="djg6C014mZvzc5y8";//put your gmail password here
+    private final String senderPassword="NSHack285$";//put your gmail password here
 
     public PasswordAuthentication getPasswordAuthentication() {
         System.out.println(senderEmailId);

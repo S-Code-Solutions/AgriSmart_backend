@@ -37,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/authenticate",
+                .antMatchers("/api/v1/user/auth/authenticate",
                         "/api/v1/user/register",
                         "/api/v1/user/sendOTP",
                         "/api/v1/user/getOTP",
@@ -48,7 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/v1/user/register",
                         "/api/v1/user/sendOTP",
                         "/api/v1/user/getOTP",
-                        "/api/v1/wishlist/delete/{wishListId}"
+                        "/api/v1/wishlist/delete/{wishListId}",
+                        "/notify-websocket/*/*/*",
+                        "/notify-websocket/*"
                 )
                 .permitAll()
                 .anyRequest()

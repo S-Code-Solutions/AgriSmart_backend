@@ -36,9 +36,7 @@ public class CropServiceImpl implements CropService {
         if (cropRepository.existsById(cropDTO.getCrop_id())) {
             return VarListUtil.RSP_NO_DATA_FOUND;
         }
-        else if (cropRepository.existsByCropName(cropDTO.getCrop_name())) {
-            return VarListUtil.RSP_DUPLICATED;
-        }else {
+        else {
             System.out.println(cropDTO.toString());
             cropRepository.addCropRecorde((int) cropDTO.getCrop_id(),cropDTO.getCrop_name(),
                     cropDTO.getCrop_variety(),

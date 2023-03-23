@@ -70,6 +70,17 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+            <version>5.3.18</version>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>5.3.18</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -88,5 +99,12 @@
 			</plugin>
 		</plugins>
 	</build>
+	<repositories>
+		<repository>
+			<id>gmaven</id>
+			<name>Google Maven</name>
+			<url>https://maven.google.com/</url>
+		</repository>
+	</repositories>
 
 </project>

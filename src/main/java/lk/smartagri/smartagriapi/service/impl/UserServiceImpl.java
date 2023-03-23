@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserDetailsService {
 
         try {
             SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom("esoftassigmenets@gmail.com");
+            message.setFrom("pdilminvirtusa@gmail.com");
             message.setTo(to);
             message.setSubject(subject);
             message.setText(text);
