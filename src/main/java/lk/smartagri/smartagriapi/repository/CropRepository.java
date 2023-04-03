@@ -22,10 +22,11 @@ public interface CropRepository extends JpaRepository<Crop,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO crop(crop_id,crop_name,crop_variety,crop_status,username) VALUES (?,?,?,?,?)", nativeQuery = true)
+    @Query(value = "INSERT INTO crop(crop_id,crop_name,crop_variety,imageurl,crop_status,username) VALUES (?,?,?,?,?,?)", nativeQuery = true)
     void addCropRecorde(int crop_id,
                         String crop_name,
                         String crop_variety,
+                        String imageURL,
                         String crop_status,
                         String username
     );
@@ -42,5 +43,8 @@ public interface CropRepository extends JpaRepository<Crop,Integer> {
 
     @Query(value =  "SELECT EXISTS(SELECT * FROM crop WHERE crop_name = ?1)", nativeQuery = true)
     boolean existsByCropName(String crop_name);
+
+    @Query(value = "SELECT * FROM crop WHERE crop_name LIKE %?1%", nativeQuery = true)
+    List<Crop> findByNameLike(String crop_name);
 
 }

@@ -17,6 +17,7 @@ public class CropDTO {
     private int crop_id;
     private String crop_name;
     private String crop_variety;
+    private String imageURL;
     private String crop_status;
 
     @JsonIgnore

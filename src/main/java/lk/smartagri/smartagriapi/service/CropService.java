@@ -10,4 +10,6 @@ public interface CropService {
 
     List<CropDTO> getAllCropItems(String username);
 
+    List<CropDTO> getCrop(String name);
+
 }

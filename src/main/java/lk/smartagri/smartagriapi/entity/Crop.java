@@ -23,6 +23,7 @@ public class Crop implements Serializable {
     private String crop_name;
     @Column(name = "crop_variety")
     private String crop_variety;
+    private String imageURL;
     private String crop_status;
 
     @ManyToOne

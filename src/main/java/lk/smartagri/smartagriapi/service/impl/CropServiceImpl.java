@@ -12,6 +12,8 @@ import lk.smartagri.smartagriapi.util.VarListUtil;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +41,7 @@ public class CropServiceImpl implements CropService {
         else {
             System.out.println(cropDTO.toString());
             cropRepository.addCropRecorde((int) cropDTO.getCrop_id(),cropDTO.getCrop_name(),
-                    cropDTO.getCrop_variety(),
+                    cropDTO.getCrop_variety(),cropDTO.getImageURL(),
                     cropDTO.getCrop_status(),cropDTO.getUsername());
             return VarListUtil.RSP_SUCCESS;
         }
@@ -50,6 +52,13 @@ public class CropServiceImpl implements CropService {
     public List<CropDTO> getAllCropItems(String username) {
         List<Crop> cropList=cropRepository.findAllByUserName(username);
         return modelMapper.map(cropList, new TypeToken<ArrayList<CropDTO>>() {
+        }.getType());
+    }
+
+    @Override
+    public List<CropDTO> getCrop(String name) {
+        List<Crop> crop= cropRepository.findByNameLike(name);
+        return modelMapper.map(crop, new TypeToken<ArrayList<CropDTO>>() {
         }.getType());
     }
 }
