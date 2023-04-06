@@ -12,6 +12,7 @@ import java.util.List;
 public interface PlantingRepository extends JpaRepository<Plant,String> {
 
     boolean existsByPlantMethod(String plantMethod);
+    boolean existsByPlant_id(String plant_id);
 
     @Transactional
     @Modifying

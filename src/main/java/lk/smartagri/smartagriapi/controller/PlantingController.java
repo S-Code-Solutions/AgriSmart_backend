@@ -88,7 +88,7 @@ public class PlantingController {
         }
     }
 
-    @GetMapping("/getpmethods")
+    @GetMapping("/getallplants")
     public ResponseEntity<ResponseDTO> getAllPlantMethods(@RequestAttribute String username,@RequestAttribute String role) {
         try{
             System.out.println(username);

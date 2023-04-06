@@ -42,13 +42,14 @@ public class PlantingServiceImpl implements PlantingService {
 
     @Override
     public String savePlant(PlantDTO plantDTO) {
-        if (plantingRepository.existsByPlantMethod(plantDTO.getPlantMethod())) {
+        if (plantingRepository.existsByPlant_id(String.valueOf(plantDTO.getPlant_id()))) {
             //createOrder Instance
             return VarListUtil.RSP_NO_DATA_FOUND;
             //orderDetailRepository.saveAll(modelMapper.map(list,listType));
         } else {
             System.out.println(plantDTO.toString());
-            plantingRepository.addPlantRecord((String) plantDTO.getPlantMethod(), plantDTO.getMethodDesc());
+            plantingRepository.save(modelMapper.map(plantDTO, Plant.class));
+//            plantingRepository.addPlantRecord((String) plantDTO.getPlantMethod(), plantDTO.getMethodDesc());
             return VarListUtil.RSP_SUCCESS;
         }
 

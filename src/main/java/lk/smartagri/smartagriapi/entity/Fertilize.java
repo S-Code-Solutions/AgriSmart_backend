@@ -16,10 +16,20 @@ import java.util.List;
 @Data
 public class Fertilize {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long fertilize_id;
     private String fertilize_name;
     private String fertilizer_type;
+    private String fertilizer_app_method;
+    private String fertilizer_app_fre;
+    private String application_rate;
+    private String fertilizer_placement;
+    private String application_timing;
+    private String fertigation;
+    private LocalDate fertlizing_date;
+    private String message;
 
-    @OneToMany(mappedBy = "fertilize", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Fertilize_Detail> fertilize_detail;
-
+    @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "crop_id", referencedColumnName = "crop_id")
+    private Crop crop_id;
 }
