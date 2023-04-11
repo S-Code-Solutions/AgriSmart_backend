@@ -24,41 +24,8 @@ public class PlantingController {
     private ResponseEntity<ResponseDTO> savePlant(@RequestBody PlantDTO plantDTO){
 
         try {
+            System.out.println(plantDTO);
             String res = plantingService.savePlant(plantDTO);
-            if (res.equals("00")) {
-                responseDTO.setCode(VarListUtil.RSP_SUCCESS);
-                responseDTO.setMessage("Success");
-                responseDTO.setContent(null);
-                return new ResponseEntity(responseDTO, HttpStatus.ACCEPTED);
-            }else if (res.equals("01")) {
-                responseDTO.setCode(VarListUtil.RSP_NO_DATA_FOUND);
-                responseDTO.setMessage("Please Use Different CropID");
-                responseDTO.setContent(null);
-                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
-            } else if (res.equals("06")) {
-                responseDTO.setCode(VarListUtil.RSP_DUPLICATED);
-                responseDTO.setMessage("Please Use Different Crop Name");
-                responseDTO.setContent(null);
-                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
-            } else {
-                responseDTO.setCode(VarListUtil.RSP_FAIL);
-                responseDTO.setMessage("Error");
-                responseDTO.setContent(null);
-                return new ResponseEntity(responseDTO, HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
-            responseDTO.setCode(VarListUtil.RSP_ERROR);
-            responseDTO.setMessage(e.getMessage());
-            responseDTO.setContent(e);
-            return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping("/saveplantdtail")
-    private ResponseEntity<ResponseDTO> savePlantDtail(@RequestBody Plant_DetailDTO plant_detailDTO){
-
-        try {
-            String res = plantingService.savePlantDtail(plant_detailDTO);
             if (res.equals("00")) {
                 responseDTO.setCode(VarListUtil.RSP_SUCCESS);
                 responseDTO.setMessage("Success");

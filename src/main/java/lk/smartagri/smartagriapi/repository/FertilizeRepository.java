@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface FertilizeRepository extends JpaRepository<Fertilize, Long> {
 
-    boolean existsByFertilize_id(long fertilizeId);
+    @Query(value = "SELECT EXISTS(SELECT * FROM fertilize WHERE fertilize_id = ?1)", nativeQuery = true)
+    boolean existBFertilize_id(Long fertilize_id);
 
     @Query(value = "SELECT * FROM fertilize where username = ?1 ",nativeQuery = true)
     List<Fertilize> findAllByUserName(String username);

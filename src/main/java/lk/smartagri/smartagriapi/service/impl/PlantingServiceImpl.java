@@ -1,10 +1,7 @@
 package lk.smartagri.smartagriapi.service.impl;
 
 import lk.smartagri.smartagriapi.dto.PlantDTO;
-import lk.smartagri.smartagriapi.dto.Plant_DetailDTO;
 import lk.smartagri.smartagriapi.entity.Plant;
-import lk.smartagri.smartagriapi.entity.Plant_Detail;
-import lk.smartagri.smartagriapi.repository.PlantDetailRepository;
 import lk.smartagri.smartagriapi.repository.PlantingRepository;
 import lk.smartagri.smartagriapi.repository.UserRepository;
 import lk.smartagri.smartagriapi.service.PlantingService;
@@ -12,11 +9,9 @@ import lk.smartagri.smartagriapi.util.VarListUtil;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 
 import java.time.LocalDate;
@@ -31,9 +26,6 @@ public class PlantingServiceImpl implements PlantingService {
     private PlantingRepository plantingRepository;
 
     @Autowired
-    private PlantDetailRepository plantDetailRepository;
-
-    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -42,13 +34,19 @@ public class PlantingServiceImpl implements PlantingService {
 
     @Override
     public String savePlant(PlantDTO plantDTO) {
-        if (plantingRepository.existsByPlant_id(String.valueOf(plantDTO.getPlant_id()))) {
+        Long plantId = plantDTO.getPlant_id();
+        if (plantingRepository.existsById(plantDTO.getPlant_id())) {
             //createOrder Instance
             return VarListUtil.RSP_NO_DATA_FOUND;
             //orderDetailRepository.saveAll(modelMapper.map(list,listType));
         } else {
             System.out.println(plantDTO.toString());
-            plantingRepository.save(modelMapper.map(plantDTO, Plant.class));
+//            plantingRepository.save(modelMapper.map(plantDTO, Plant.class));
+            plantingRepository.addPLantRecord((int) plantDTO.getPlant_id(),plantDTO.getPlantMethod(),
+                    plantDTO.getPlanting_date(),plantDTO.getPlanting_density(), plantDTO.getPlanting_location(),
+                    plantDTO.getSeeding_depth(), plantDTO.getSeeding_rate(), plantDTO.getSoil_preparation(),
+                    plantDTO.getWater_duration(), plantDTO.getMessage(), plantDTO.getCrop_id()
+                    );
 //            plantingRepository.addPlantRecord((String) plantDTO.getPlantMethod(), plantDTO.getMethodDesc());
             return VarListUtil.RSP_SUCCESS;
         }
@@ -56,23 +54,30 @@ public class PlantingServiceImpl implements PlantingService {
 //        return VarListUtil.RSP_NO_DATA_FOUND;
     }
 
-    @Override
-    public String savePlantDtail(Plant_DetailDTO plant_detailDTO) {
-//        if (plantDetailRepository.existsByPlant_detail_id(plant_detailDTO.getPlant_detail_id())) {
-            //createOrder Instance
-//            return VarListUtil.RSP_NO_DATA_FOUND;
-            //orderDetailRepository.saveAll(modelMapper.map(list,listType));
-//        } else {
-            System.out.println(plant_detailDTO.toString());
-            plantDetailRepository.addPlantDRecord((Long) plant_detailDTO.getPlant_detail_id(), plant_detailDTO.getPlantMethod(), plant_detailDTO.getPlanting_location(), plant_detailDTO.getPlanting_density(), plant_detailDTO.getSeeding_rate(), plant_detailDTO.getSeeding_depth(), plant_detailDTO.getSoil_preparation(), plant_detailDTO.getPlanting_date(), plant_detailDTO.getWater_duration(), plant_detailDTO.getMessage(), plant_detailDTO.getCrop_id());
-            return VarListUtil.RSP_SUCCESS;
-//        }
-    }
 
     @Override
     public List<PlantDTO> getAllPlantMethods(String username) {
         List<Plant> plantList = plantingRepository.findAllByUserName(username);
-        return modelMapper.map(plantList, new TypeToken<ArrayList<PlantDTO>>(){}.getType());
+        List<PlantDTO> plantDTOList = new ArrayList<>();
+        for (Plant plant : plantList) {
+            PlantDTO plantDTO = new PlantDTO();
+//            // map each field from Plant to PlantDTO
+            plantDTO.setPlant_id(plant.getPlant_id());
+            plantDTO.setPlantMethod(plant.getPlantMethod());
+            plantDTO.setPlanting_date(plant.getPlanting_date());
+            plantDTO.setPlanting_density(plant.getPlanting_density());
+            plantDTO.setPlanting_location(plant.getPlanting_location());
+            plantDTO.setSeeding_depth(plant.getSeeding_depth());
+            plantDTO.setSeeding_rate(plant.getSeeding_rate());
+            plantDTO.setSoil_preparation(plant.getSoil_preparation());
+            plantDTO.setWater_duration(plant.getWater_duration());
+            plantDTO.setMessage(plant.getMessage());
+//            plantDTO.setName(plant.getName());
+//            // add the new PlantDTO object to the list
+            plantDTOList.add(plantDTO);
+        }
+        return plantDTOList;
+//        return modelMapper.map(plantList, new TypeToken<ArrayList<PlantDTO>>(){}.getType());
     }
 
 //    public List<Plant_Detail> getAllPlantings() {
@@ -81,26 +86,26 @@ public class PlantingServiceImpl implements PlantingService {
 //    }
 
 
-    @Scheduled(cron = "0 09 17 * * *")// Runs every day at 9 AM
-    public String checkPlantings(String username) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-
-        List<Plant_Detail> plantings = PlantDetailRepository.findAllByUserName(username);
-        LocalDate today = LocalDate.now();
-
-        String message = null;
-        for (Plant_Detail planting : plantings) {
-            LocalDate nextWateringDate = planting.getPlanting_date().plusDays(planting.getWater_duration());
-
-            if (nextWateringDate.isEqual(today)) {
-//                sendNotification(planting);
-                message = "Your " + planting.getCrop_id().getCrop_name() + " plants need watering today.";
-            }
-        }
-
-        return message;
-    }
+//    @Scheduled(cron = "0 09 17 * * *")// Runs every day at 9 AM
+//    public String checkPlantings(String username) {
+////        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+////        String username = authentication.getName();
+//
+//        List<Plant_Detail> plantings = PlantDetailRepository.findAllByUserName(username);
+//        LocalDate today = LocalDate.now();
+//
+//        String message = null;
+//        for (Plant_Detail planting : plantings) {
+//            LocalDate nextWateringDate = planting.getPlanting_date().plusDays(planting.getWater_duration());
+//
+//            if (nextWateringDate.isEqual(today)) {
+////                sendNotification(planting);
+//                message = "Your " + planting.getCrop_id().getCrop_name() + " plants need watering today.";
+//            }
+//        }
+//
+//        return message;
+//    }
 
 
 //    public String sendNotification(Plant_Detail planting) {

@@ -26,7 +26,7 @@ public class FertilizeServiceImpl implements FertilizeService {
 
     @Override
     public String saveFertilizer(FertilizeDTO fertilizeDTO) {
-        if(fertilizeRepository.existsByFertilize_id(fertilizeDTO.getFertilize_id())){
+        if(fertilizeRepository.existBFertilize_id(fertilizeDTO.getFertilize_id())){
             return VarListUtil.RSP_NO_DATA_FOUND;
         }else{
             fertilizeRepository.save(modelMapper.map(fertilizeDTO, Fertilize.class));

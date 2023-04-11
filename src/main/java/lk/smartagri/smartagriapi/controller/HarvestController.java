@@ -8,10 +8,9 @@ import lk.smartagri.smartagriapi.util.VarListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/harvest")
@@ -55,5 +54,24 @@ public class HarvestController {
             responseDTO.setContent(e);
             return new ResponseEntity(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("/getallharvest")
+    public ResponseEntity<ResponseDTO> getAllHarvestMethods(@RequestAttribute String username,@RequestAttribute String role) {
+        try{
+            System.out.println(username);
+            System.out.println(role);
+            List<HarvestDTO> harvestDTO = harvestService.getAllHarvestMethods(username);
+            responseDTO.setCode(VarListUtil.RSP_SUCCESS);
+            responseDTO.setMessage("Success");
+            responseDTO.setContent(harvestDTO);
+            return new ResponseEntity<>(responseDTO, HttpStatus.ACCEPTED);
+        }catch (Exception e){
+            responseDTO.setCode(VarListUtil.RSP_ERROR);
+            responseDTO.setMessage(e.getMessage());
+            responseDTO.setContent(e);
+            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }

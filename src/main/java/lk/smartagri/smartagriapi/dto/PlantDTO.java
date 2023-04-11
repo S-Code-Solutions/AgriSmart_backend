@@ -24,7 +24,5 @@ public class PlantDTO {
     private LocalDate planting_date;
     private int water_duration;
     private String message;
-
-    @JsonIgnore
     private int crop_id;
 }

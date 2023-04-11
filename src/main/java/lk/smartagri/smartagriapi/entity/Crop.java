@@ -30,4 +30,5 @@ public class Crop implements Serializable {
     @JsonIgnore
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
+
 }

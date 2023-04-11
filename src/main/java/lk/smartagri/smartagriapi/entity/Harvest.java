@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -16,9 +17,21 @@ import java.util.List;
 public class Harvest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long harvest_id;
     private String harvest_method;
-    private String MethodDesc;
+    private String harvesting_equipment;
+    private String labor_requirement;
+    private String storage_requirement;
+    private String harvest_quality;
+    private int harvest_cost;
+    private String harvest_waste;
+    private LocalDate harvesting_date;
+    private String message;
 
-    @OneToMany(mappedBy = "harvest", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Harvest_Detail> harvest_detail;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "crop_id", referencedColumnName = "crop_id")
+    private Crop crop_id;
+
 }

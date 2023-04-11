@@ -29,7 +29,8 @@ public class Plant {
     private int water_duration;
     private String message;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "crop_id", referencedColumnName = "crop_id")
     private Crop crop_id;
 

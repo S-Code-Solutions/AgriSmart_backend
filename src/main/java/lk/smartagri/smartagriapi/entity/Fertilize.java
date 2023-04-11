@@ -29,7 +29,8 @@ public class Fertilize {
     private LocalDate fertlizing_date;
     private String message;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "crop_id", referencedColumnName = "crop_id")
     private Crop crop_id;
 }
