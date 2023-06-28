@@ -1,6 +1,5 @@
 package lk.smartagri.smartagriapi.controller;
 
-import lk.smartagri.smartagriapi.dto.FertilizeDTO;
 import lk.smartagri.smartagriapi.dto.HarvestDTO;
 import lk.smartagri.smartagriapi.dto.ResponseDTO;
 import lk.smartagri.smartagriapi.service.impl.HarvestServiceImpl;

@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface HarvestRepository extends JpaRepository<Harvest, Long> {
 
-    @Query(value = "SELECT EXISTS(SELECT * FROM harvest WHERE harvest_id = ?1)", nativeQuery = true)
-    boolean exitBHarvest_id(Long harvest_id);
-
-    @Query(value = "SELECT * FROM harvest where username = ?1 ",nativeQuery = true)
+    @Query(value = "SELECT h.* FROM harvest h " +
+            "INNER JOIN crop c ON h.crop_id = c.crop_id " +
+            "INNER JOIN user u ON c.username = u.username " +
+            "WHERE u.username = ?1", nativeQuery = true)
     List<Harvest> findAllByUserName(String username);
 }

@@ -25,8 +25,6 @@ public class FertilizeDTO {
     private String fertigation;
     private LocalDate fertlizing_date;
     private String message;
-
-    @JsonIgnore
     private int crop_id;
 
 }

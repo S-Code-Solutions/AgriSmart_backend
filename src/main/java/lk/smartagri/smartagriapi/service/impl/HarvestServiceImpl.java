@@ -28,7 +28,7 @@ public class HarvestServiceImpl implements HarvestService {
 
     @Override
     public String saveHarvest(HarvestDTO harvestDTO) {
-        if (harvestRepository.exitBHarvest_id(harvestDTO.getHarvest_id())){
+        if (harvestRepository.existsById(harvestDTO.getHarvest_id())){
             return VarListUtil.RSP_NO_DATA_FOUND;
         }else{
             harvestRepository.save(modelMapper.map(harvestDTO, Harvest.class));
@@ -39,6 +39,23 @@ public class HarvestServiceImpl implements HarvestService {
     @Override
     public List<HarvestDTO> getAllHarvestMethods(String username) {
         List<Harvest> harvestList = harvestRepository.findAllByUserName(username);
-        return modelMapper.map(harvestList, new TypeToken<ArrayList<HarvestDTO>>(){}.getType());
+        List<HarvestDTO> harvestDTOList = new ArrayList<>();
+        for (Harvest harvest : harvestList) {
+            HarvestDTO harvestDTO = new HarvestDTO();
+
+            harvestDTO.setHarvest_id(harvest.getHarvest_id());
+            harvestDTO.setHarvest_method(harvest.getHarvest_method());
+            harvestDTO.setHarvesting_equipment(harvest.getHarvesting_equipment());
+            harvestDTO.setLabor_requirement(harvest.getLabor_requirement());
+            harvestDTO.setStorage_requirement(harvest.getStorage_requirement());
+            harvestDTO.setHarvest_quality(harvest.getHarvest_quality());
+            harvestDTO.setHarvest_cost(String.valueOf(harvest.getHarvest_cost()));
+            harvestDTO.setHarvest_waste(harvest.getHarvest_waste());
+            harvestDTO.setHarvesting_date(String.valueOf(harvest.getHarvesting_date()));
+            harvestDTO.setMessage(harvest.getMessage());
+
+            harvestDTOList.add(harvestDTO);
+        }
+        return harvestDTOList;
     }
 }

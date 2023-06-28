@@ -72,12 +72,11 @@ public class PlantingServiceImpl implements PlantingService {
             plantDTO.setSoil_preparation(plant.getSoil_preparation());
             plantDTO.setWater_duration(plant.getWater_duration());
             plantDTO.setMessage(plant.getMessage());
-//            plantDTO.setName(plant.getName());
-//            // add the new PlantDTO object to the list
+
             plantDTOList.add(plantDTO);
         }
         return plantDTOList;
-//        return modelMapper.map(plantList, new TypeToken<ArrayList<PlantDTO>>(){}.getType());
+
     }
 
 //    public List<Plant_Detail> getAllPlantings() {

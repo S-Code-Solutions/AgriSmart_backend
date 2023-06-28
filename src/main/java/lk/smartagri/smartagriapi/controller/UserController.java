@@ -1,25 +1,14 @@
 package lk.smartagri.smartagriapi.controller;
-/**
- * @author Udara San
- * @TimeStamp 11:43 AM | 11/9/2022 | 2022
- * @ProjectDetails ecom-api
- */
+
 import lk.smartagri.smartagriapi.dto.ResponseDTO;
 import lk.smartagri.smartagriapi.dto.UserDTO;
 import lk.smartagri.smartagriapi.service.impl.UserServiceImpl;
-//import lk.smartagri.smartagriapi.util.FileUploadUtil;
 import lk.smartagri.smartagriapi.util.VarListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("api/v1/user")
@@ -30,32 +19,6 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
-
-    //zip file upload
-//    @PostMapping(value = "/uploadNICImage")
-//    public ResponseEntity<ResponseDTO> registerPropertyImageUpload(@RequestParam("files") MultipartFile[] files) {
-//        try{
-//            String uploadDir="uploadUserImages";
-//            Arrays.stream(files).forEach(file -> {
-//                String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-//                System.out.println(fileName);
-//                try {
-//                    FileUploadUtil.saveFile(uploadDir, fileName, file);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            });
-//            responseDTO.setCode(VarListUtil.RSP_SUCCESS);
-//            responseDTO.setMessage("Success");
-//            responseDTO.setContent(null);
-//            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-//        }catch (Exception e){
-//            responseDTO.setCode(VarListUtil.RSP_ERROR);
-//            responseDTO.setMessage(e.getMessage());
-//            responseDTO.setContent(e);
-//            return new ResponseEntity<>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     @PostMapping(value = "/register")
     public ResponseEntity<ResponseDTO> registerUser(@RequestBody UserDTO userDTO) {

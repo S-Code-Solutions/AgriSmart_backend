@@ -33,7 +33,32 @@ public class User implements Serializable {
     private String email;
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Crop> crop;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<auction> auction;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Finance> finance;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<forum> forum;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<market> market;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<comment> comment;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<Order> orders;
 
 }
